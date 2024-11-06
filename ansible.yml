@@ -3,4 +3,6 @@
   connection: local
   tasks:
    - name: Run jar
-     shell: java -jar target/cicd-0.0.1-SNAPSHOT.jar
+     shell: |
+       mvn package -Dmaven.test.skip=true
+       java -jar target/cicd-0.0.1-SNAPSHOT.jar

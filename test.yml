@@ -1,0 +1,36 @@
+---
+# file: test.yml
+
+- hosts: "{{host_group}}"
+  connection: local
+  any_errors_fatal: true
+  become: yes
+  gather_facts: false
+
+  vars:
+    users:
+      alice:
+        name: Alice Appleworth
+        telephone: 123-456-7890
+      bob:
+        name: Bob Bananarama
+        telephone: 987-654-3210
+  tasks:
+    # with predefined vars
+    - name: Print phone records
+      ansible.builtin.debug:
+        msg: "User {{ item.key }} is {{ item.value.name }} ({{ item.value.telephone }})"
+      loop: "{{ lookup('ansible.builtin.dict', users) }}"
+
+    # with inline dictionary
+    - name: show inline dictionary
+      ansible.builtin.debug:
+        msg: "{{item.key}}: {{item.value}}"
+      with_dict: {a: 1, b: 2, c: 3}
+
+    # Items from loop can be used in when: statements
+    - name: set_fact when alice in key
+      ansible.builtin.set_fact:
+        alice_exists: true
+      loop: "{{ lookup('ansible.builtin.dict', users) }}"
+      when: "'alice' in item.key"

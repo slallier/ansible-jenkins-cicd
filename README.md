@@ -1,6 +1,9 @@
 # ansible-jenkins-cicd
 This repository creates  a cicd pipeline using Jenkins, Ansible, SpringBoot
 
+To compile 
+mvn package -Dmaven.test.skip=true
+
 To run unit tests :
 mvn test -Punit-tests
 
