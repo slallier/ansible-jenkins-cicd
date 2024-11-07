@@ -2,7 +2,7 @@
 # file: test.yml
 
 - hosts: "{{host_group}}"
-  connection: local
+  #connection: local
   any_errors_fatal: true
   become: yes
   gather_facts: false
